@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('file:///C:/Users/gjssn/OneDrive/Desktop/lib1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .availability {
+      font-weight: bold;
+      color: #008000;
+    }
+
+    .bookList {
+      margin-top: 20px;
+      display: flex;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+
+    .bookItem {
+      width: 200px;
+      padding: 10px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .bookItem h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .pageLink {
+      display: inline-block;
+      padding: 5px 10px;
+      margin-right: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .pageLink.active {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    #signupLogin {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    #signupLogin h2 {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    #signupLogin input[type="text"],
+    #signupLogin input[type="password"],
+    #signupLogin input[type="email"] {
+      width: 94%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+
+    #signupLogin button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    #searchBar {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #searchInput {
+      padding: 10px;
+      width: 300px;
+      text-align: center;
+    }
+
+    #filters {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #filters select {
+      padding: 5px;
+      text-align: center;
+    }
+
+    #bookCount {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #cart {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #paymentForm {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    #paymentForm div {
+      margin-right: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #paymentForm label {
+      white-space: nowrap;
+    }
+
+    #paymentForm label,
+    #paymentForm input {
+      margin-bottom: 5px;
+    }
+  </style>
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Library Management</h1>
+    <p>WELCOME TO OUR LIBRARY!</p>
+  </header>
+
+  <main>
+    <div id="signupLogin">
+      <h2>Sign Up / Login</h2>
+      <input type="text" id="usernameInput" placeholder="Username">
+      <input type="password" id="passwordInput" placeholder="Password">
+      <button id="signupLoginButton">Sign Up / Login</button>
+    </div>
+
+    <div id="searchBar">
+      <input type="text" id="searchInput" placeholder="Search books">
+      <button id="searchButton">Search</button>
+    </div>
+
+    <div id="filters">
+      <select id="sortFilter">
+        <option value="title">Sort by Title</option>
+        <option value="author">Sort by Author</option>
+      </select>
+      <select id="availabilityFilter">
+        <option value="all">All</option>
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+      </select>
+      <button id="filterButton">Apply Filters</button>
+    </div>
+
+    <div id="bookCount">Total Books: <span id="totalBooks">0</span></div>
+
+    <div id="bookList" class="bookList"></div>
+
+    <div id="pagination" class="pagination"></div>
+    <div id="bookCount">Total Books: <span id="totalBooks">0</span></div>
+
+
+    <div id="cart">
+      <h2>Cart</h2>
+      <p>Your cart is empty.</p>
+    </div>
+<div id="payment">
+      <h2>Payment</h2>
+      <form id="paymentForm">
+        <div>
+          <input type="radio" id="creditCard" name="paymentOption" value="creditCard" checked>
+          <label for="creditCard">Credit Card</label>
+        </div>
+        <div>
+          <input type="radio" id="paypal" name="paymentOption" value="paypal">
+          <label for="paypal">PayPal</label>
+        </div>
+        <div>
+          <input type="radio" id="Gpay" name="paymentOption" value="Gpay">
+          <label for="Gpay">Gpay</label>
+        </div>
+        <div id="creditCardDetails">
+          <label for="cardNumber">Card Number:</label>
+          <input type="text" id="cardNumber" required>
+          <br>
+          <label for="cardHolder">Card Holder:</label>
+          <input type="text" id="cardHolder" required>
+          <br>
+          <label for="expiryDate">Expiry Date:</label>
+          <input type="text" id="expiryDate" required>
+          <br>
+          <label for="cvv">CVV:</label>
+          <input type="text" id="cvv" required>
+        </div>
+        <div id="paypalDetails">
+          <label for="paypalEmail">Email:</label>
+          <input type="email" id="paypalEmail" required>
+          <br>
+          <label for="paypalPassword">Password:</label>
+          <input type="password" id="paypalPassword" required>
+        </div>
+        <button id="payButton">Pay</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footerContent">
+      <p>&copy; 2023 Library Management. All rights reserved.</p>
+      <p>Contact: gjss.npt@gamil.com | Phone: +91 9703586147</p>
+    </div>
+  </footer>
+
+  <script>
+    const bookListData = [
+      {
+        title: "Book 1",
+        author: "Author 1",
+        availability: "available",
+      },
+      {
+        title: "Book 2",
+        author: "Author 2",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 3",
+        author: "Author 3",
+        availability: "available",
+      },
+      {
+        title: "Book 4",
+        author: "Author 4",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 5",
+        author: "Author 5",
+        availability: "available",
+      },
+      {
+        title: "Book 6",
+        author: "Author 6",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 7",
+        author: "Author 7",
+        availability: "available",
+      },
+      {
+        title: "Book 8",
+        author: "Author 8",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 9",
+        author: "Author 9",
+        availability: "available",
+      },
+      {
+        title: "Book 10",
+        author: "Author 10",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 11",
+        author: "Author 11",
+        availability: "available",
+      },
+      {
+        title: "Book 12",
+        author: "Author 12",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 13",
+        author: "Author 13",
+        availability: "available",
+      },
+      {
+        title: "Book 14",
+        author: "Author 14",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 15",
+        author: "Author 15",
+        availability: "available",
+      },
+      {
+        title: "Book 16",
+        author: "Author 16",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 17",
+        author: "Author 17",
+        availability: "available",
+      },
+      {
+        title: "Book 18",
+        author: "Author 18",
+        availability: "unavailable",
+      },
+      {
+        title: "Book 19",
+        author: "Author 19",
+        availability: "available",
+      },
+      {
+        title: "Book 20",
+        author: "Author 20",
+        availability: "unavailable",
+      },
+    ];
+
+    const booksPerPage = 6;
+    let currentPage = 1;
+
+    const bookList = document.getElementById("bookList");
+    const pagination = document.getElementById("pagination");
+    const searchInput = document.getElementById("searchInput");
+    const sortFilter = document.getElementById("sortFilter");
+    const availabilityFilter = document.getElementById("availabilityFilter");
+    const filterButton = document.getElementById("filterButton");
+    const totalBooksElement = document.getElementById("totalBooks");
+    const cartElement = document.getElementById("cart");
+
+    let cartItems = [];
+    signupLoginButton.addEventListener('click', () => {
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+      
+      if (username && password) {
+
+        login(username, password);
+      } else {
+        alert('Please enter a username and password.');
+      }
+    });
+
+
+    function login(username, password) {
+      setTimeout(() => {
+        alert(`Logged in successfully as ${username}!`);
+      }, 1000);
+    }
+
+
+    displayBooks();
+
+    pagination.addEventListener("click", function (event) {
+      if (event.target.tagName === "A") {
+        currentPage = parseInt(event.target.dataset.page);
+        displayBooks();
+      }
+    });
+    function renderBookList(books) {
+  bookList.innerHTML = ''; 
+  books.forEach((book) => {
+    const bookItem = document.createElement('div');
+    bookItem.textContent = book.title;
+    bookList.appendChild(bookItem);
+  });
+  function updateBookCount(count) {
+  totalBooksElement.textContent = count;
+}
+
+  updateTotalBooksCount(books.length); 
+}
+
+    function renderPagination(totalPages, totalCount) {
+  pagination.innerHTML = ''; 
+  for (let i = 1; i <= totalPages; i++) {
+    const pageButton = document.createElement('button');
+    pageButton.textContent = i;
+    pagination.appendChild(pageButton);
+  }
+
+  updateTotalBooksCount(totalCount); 
+}
+
+searchButton.addEventListener('click', () => {
+  const searchQuery = searchInput.value;
+
+  const searchResults = [{ title: 'Book 1' }, { title: 'Book 2' }, { title: 'Book 3' }];
+  renderBookList(searchResults);
+});
+
+
+filterButton.addEventListener('click', () => {
+  const sortBy = sortFilter.value;
+  const availability = availabilityFilter.value;
+
+  const filteredBooks = [{ title: 'Book 1' }, { title: 'Book 2' }];
+  renderBookList(filteredBooks);
+});
+
+    document.getElementById("searchButton").addEventListener("click", function () {
+      currentPage = 1;
+      displayBooks();
+    });
+
+    filterButton.addEventListener("click", function () {
+      currentPage = 1;
+      displayBooks();
+    });
+
+
+    bookList.addEventListener("click", function (event) {
+      if (event.target.classList.contains("addToCart")) {
+        const bookIndex = parseInt(event.target.dataset.index);
+        addToCart(bookIndex);
+        
+      }
+      
+      
+    });
+
+
+    function displayBooks() {
+
+      bookList.innerHTML = "";
+
+
+      const searchTerm = searchInput.value.toLowerCase();
+      let filteredBooks = bookListData.filter(function (book) {
+        return (
+          book.title.toLowerCase().includes(searchTerm) ||
+          book.author.toLowerCase().includes(searchTerm)
+        );
+      });
+
+
+      const availability = availabilityFilter.value;
+      if (availability === "available") {
+        filteredBooks = filteredBooks.filter(function (book) {
+          return book.availability === "available";
+        });
+      }
+
+
+      const sortOption = sortFilter.value;
+      if (sortOption === "title") {
+        filteredBooks.sort(function (a, b) {
+          return a.title.localeCompare(b.title);
+        });
+      } else if (sortOption === "author") {
+        filteredBooks.sort(function (a, b) {
+          return a.author.localeCompare(b.author);
+        });
+      }
+
+      totalBooksElement.textContent = filteredBooks.length;
+
+
+      const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+
+      if (currentPage < 1) {
+        currentPage = 1;
+      } else if (currentPage > totalPages) {
+        currentPage = totalPages;
+      }
+
+
+      const startIndex = (currentPage - 1) * booksPerPage;
+      const endIndex = startIndex + booksPerPage;
+
+
+      const booksToShow = filteredBooks.slice(startIndex, endIndex);
+
+
+      booksToShow.forEach(function (book, index) {
+        const bookItem = document.createElement("div");
+        bookItem.classList.add("bookItem");
+        bookItem.innerHTML = `
+          <h3>${book.title}</h3>
+          <p>Author: ${book.author}</p>
+          <p class="availability">${
+          book.availability === "available" ? "Available" : "Unavailable"
+        }</p>
+          <button class="addToCart" data-index="${startIndex + index}">Add to Cart</button>
+        `;
+        bookList.appendChild(bookItem);
+      });
+
+      generatePaginationLinks(totalPages);
+
+      updateCart();
+    }
+
+
+    function generatePaginationLinks(totalPages) {
+      pagination.innerHTML = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement("a");
+        pageLink.classList.add("pageLink");
+        pageLink.textContent = i;
+        pageLink.dataset.page = i;
+        if (i === currentPage) {
+          pageLink.classList.add("active");
+        }
+        pagination.appendChild(pageLink);
+      }
+    }
+
+
+    function addToCart(bookIndex) {
+      const book = bookListData[bookIndex];
+      cartItems.push(book);
+      updateCart();
+      
+    }
+
+    function updateCart() {
+      if (cartItems.length > 0) {
+        let cartHTML = "<h2>Cart</h2>";
+        cartItems.forEach(function (book) {
+          cartHTML += `<p>${book.title}</p>`;
+        });
+        cartElement.innerHTML = cartHTML;
+      } else {
+        cartElement.innerHTML = "<h2>Cart</h2><p>Your cart is empty.</p>";
+      }
+    }
+const payButton = document.getElementById('payButton');
+    payButton.addEventListener('click', (event) => {
+      event.preventDefault(); // Prevent form submission
+
+      const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
+
+      switch (paymentOption) {
+        case 'creditCard':
+          processCreditCardPayment();
+          break;
+        case 'paypal':
+          processPaypalPayment();
+          break;
+        case 'googlePay':
+          processGooglePayPayment();
+          break;
+        case 'applePay':
+          processApplePayPayment();
+          break;
+        default:
+          alert('Invalid payment option selected.');
+      }
+    });
+
+    function processCreditCardPayment() {
+
+      const cardNumber = document.getElementById('cardNumber').value;
+      const cardHolder = document.getElementById('cardHolder').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
+
+      if (cardNumber && cardHolder && expiryDate && cvv) {
+        // Perform credit card payment logic here
+        payWithCreditCard(cardNumber, cardHolder, expiryDate, cvv);
+      } else {
+        alert('Please fill in all credit card details.');
+      }
+    }
+
+    function processPaypalPayment() {
+
+      const paypalEmail = document.getElementById('paypalEmail').value;
+      const paypalPassword = document.getElementById('paypalPassword').value;
+
+      if (paypalEmail && paypalPassword) {
+
+        payWithPayPal(paypalEmail, paypalPassword);
+      } else {
+        alert('Please provide PayPal email and password.');
+      }
+    }
+
+    function processGooglePayPayment() {
+      
+      setTimeout(() => {
+        alert('Google Pay payment successful!');
+      }, 1000);
+    }
+
+    function processApplePayPayment() {
+      
+      setTimeout(() => {
+        alert('Apple Pay payment successful!');
+      }, 1000);
+    }
+  </script>
+</body>
+
+</html>
