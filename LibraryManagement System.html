@@ -588,7 +588,7 @@ filterButton.addEventListener('click', () => {
     }
 const payButton = document.getElementById('payButton');
     payButton.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
 
       const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
 
@@ -618,7 +618,6 @@ const payButton = document.getElementById('payButton');
       const cvv = document.getElementById('cvv').value;
 
       if (cardNumber && cardHolder && expiryDate && cvv) {
-        // Perform credit card payment logic here
         payWithCreditCard(cardNumber, cardHolder, expiryDate, cvv);
       } else {
         alert('Please fill in all credit card details.');
